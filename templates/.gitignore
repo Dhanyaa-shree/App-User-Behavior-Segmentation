@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Data files (large)
+*.csv
+*.pkl
+*.h5
+*.parquet
+
+# Notebook outputs
+*.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Model files (large)
+models/*.pkl
+
+# Logs
+*.log
+
+# Environment
+.env

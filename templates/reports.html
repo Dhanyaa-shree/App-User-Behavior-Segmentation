@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Reports & Insights - App User Segmentation{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>📊 Reports & Business Insights</h1>
+        <p>Actionable recommendations for each user segment</p>
+    </div>
+</section>
+
+<section class="reports-section">
+    <div class="container">
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>📋 Executive Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="summary-number">{{ summary|sum(attribute='count')|format_number }}</span>
+                    <span class="summary-label">Total Users Analyzed</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-number">{{ summary|length }}</span>
+                    <span class="summary-label">Distinct Segments</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-number">
+                        {% set high_engagement = summary|selectattr('segment', 'equalto', 'High Engagement')|list|first %}
+                        {{ high_engagement.percentage|round(1) if high_engagement else 0 }}%
+                    </span>
+                    <span class="summary-label">High Engagement Users</span>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-number">
+                        {% set at_risk = summary|selectattr('segment', 'equalto', 'Low Engagement / At-Risk')|list|first %}
+                        {{ at_risk.percentage|round(1) if at_risk else 0 }}%
+                    </span>
+                    <span class="summary-label">At-Risk Users</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Insights -->
+        <div class="insights-container">
+            <h2>Segment-Wise Insights & Recommendations</h2>
+            
+            {% for insight in insights %}
+            <div class="insight-card-full" style="--insight-color: {{ insight.color }};">
+                <div class="insight-header">
+                    <div class="insight-icon-wrapper" style="background-color: {{ insight.color }}20;">
+                        <span class="insight-icon" style="color: {{ insight.color }};">{{ insight.icon }}</span>
+                    </div>
+                    <div class="insight-title">
+                        <h3 style="color: {{ insight.color }};">{{ insight.segment }}</h3>
+                        <p>{{ insight.stats }}</p>
+                    </div>
+                    <div class="insight-engagement">
+                        <span class="engagement-label">Avg Engagement</span>
+                        <span class="engagement-value" style="color: {{ insight.color }};">
+                            {{ insight.avg_engagement }}
+                        </span>
+                    </div>
+                </div>
+                <div class="insight-body">
+                    <div class="insight-description">
+                        <p>{{ insight.description }}</p>
+                    </div>
+                    <div class="recommendations">
+                        <h4>💡 Recommended Actions</h4>
+                        <ul>
+                            {% for rec in insight.recommendations %}
+                            <li>{{ rec }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Business Impact -->
+        <div class="business-impact">
+            <h2>📈 Business Impact Analysis</h2>
+            <div class="impact-grid">
+                <div class="impact-card">
+                    <span class="impact-icon">💰</span>
+                    <h4>Revenue Opportunities</h4>
+                    <p>High engagement users are 3.5x more likely to convert to premium features.</p>
+                    <span class="impact-tag">Potential: $50K+</span>
+                </div>
+                <div class="impact-card">
+                    <span class="impact-icon">🔄</span>
+                    <h4>Retention Strategy</h4>
+                    <p>Target at-risk users with personalized re-engagement campaigns.</p>
+                    <span class="impact-tag">Churn Reduction: 25%</span>
+                </div>
+                <div class="impact-card">
+                    <span class="impact-icon">🚀</span>
+                    <h4>Product Development</h4>
+                    <p>Focus feature development based on segment usage patterns.</p>
+                    <span class="impact-tag">ROI: High</span>
+                </div>
+                <div class="impact-card">
+                    <span class="impact-icon">📱</span>
+                    <h4>User Experience</h4>
+                    <p>Personalize UI and content recommendations per segment.</p>
+                    <span class="impact-tag">Satisfaction: +18%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Plan -->
+        <div class="action-plan">
+            <h2>🎯 30-Day Action Plan</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h4>Week 1: Identify & Segment</h4>
+                        <p>Finalize segment definitions and create targeted user lists for each segment.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h4>Week 2: Campaign Launch</h4>
+                        <p>Deploy personalized campaigns for each segment (emails, push notifications, offers).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h4>Week 3: Monitor & Optimize</h4>
+                        <p>Track engagement metrics and campaign performance. A/B test different approaches.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h4>Week 4: Review & Scale</h4>
+                        <p>Analyze results, refine strategies, and scale successful initiatives.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Options -->
+        <div class="export-options">
+            <h3>📥 Download Reports</h3>
+            <div class="export-grid">
+                <a href="#" class="export-btn" onclick="generatePDF(); return false;">
+                    📄 Download PDF Report
+                </a>
+                <a href="#" class="export-btn" onclick="generateCSV(); return false;">
+                    📊 Download CSV Data
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

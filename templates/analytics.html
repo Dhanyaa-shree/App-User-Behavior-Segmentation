@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - App User Segmentation{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>📈 Analytics & Visualizations</h1>
+        <p>Comprehensive data visualizations to understand user behavior patterns</p>
+    </div>
+</section>
+
+<section class="analytics-section">
+    <div class="container">
+        <div class="analytics-grid">
+            <div class="analytics-card full-width">
+                <div class="card-header">
+                    <h3>📊 User Distribution by Segment</h3>
+                    <p>How users are distributed across different behavioral segments</p>
+                </div>
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ segment_chart }}" alt="Segment Distribution" class="chart-img">
+                </div>
+            </div>
+
+            <div class="analytics-card full-width">
+                <div class="card-header">
+                    <h3>🎯 PCA Visualization</h3>
+                    <p>Dimensionality reduction showing cluster separation</p>
+                </div>
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ pca_chart }}" alt="PCA Visualization" class="chart-img">
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3>📈 Engagement by Segment</h3>
+                    <p>Average engagement scores per segment</p>
+                </div>
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ engagement_chart }}" alt="Engagement Chart" class="chart-img">
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <div class="card-header">
+                    <h3>🔍 Correlation Heatmap</h3>
+                    <p>Feature correlations and relationships</p>
+                </div>
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ heatmap_chart }}" alt="Correlation Heatmap" class="chart-img">
+                </div>
+            </div>
+
+            <div class="analytics-card full-width">
+                <div class="card-header">
+                    <h3>📊 Behavior Profile Radar</h3>
+                    <p>Comparative behavior patterns across segments</p>
+                </div>
+                <div class="chart-container">
+                    <img src="data:image/png;base64,{{ behavior_chart }}" alt="Behavior Profile" class="chart-img">
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-insights">
+            <h3>💡 Key Insights</h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <span class="insight-icon">🎯</span>
+                    <h4>Clear Segment Separation</h4>
+                    <p>PCA visualization shows distinct clusters, validating effective feature selection.</p>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-icon">📈</span>
+                    <h4>High Engagement Users</h4>
+                    <p>Top segment shows significantly higher engagement scores and session activity.</p>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-icon">⚠️</span>
+                    <h4>At-Risk Users Identified</h4>
+                    <p>Low engagement segment requires immediate retention strategies.</p>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-icon">💡</span>
+                    <h4>Feature Usage Patterns</h4>
+                    <p>Strong correlation between feature clicks and engagement scores.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

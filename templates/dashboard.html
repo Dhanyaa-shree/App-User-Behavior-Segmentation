@@ -1,0 +1,376 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - User Segmentation{% endblock %}
+
+{% block content %}
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero">
+    <div class="hero-bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+        <div class="shape shape-5"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-badge animate-fade-in">
+                <span class="badge-glow">
+                    <span class="badge-dot"></span>
+                    ✦ AI-Powered Analytics
+                </span>
+            </div>
+            
+            <h1 class="animate-fade-in">
+                <span class="hero-gradient-text">App User Behavior</span><br>
+                <span class="hero-highlight">Segmentation</span>
+            </h1>
+            
+            <p class="animate-fade-in animate-delay-1">
+                Unsupervised Machine Learning for User Engagement Analysis
+            </p>
+            
+            <div class="hero-stats animate-fade-in animate-delay-2">
+                <div class="hero-stat">
+                    <span class="stat-number">{{ total_users|format_number }}</span>
+                    <span class="stat-label">Total Users</span>
+                    <div class="stat-trend up">↑ 12% growth</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="stat-number">{{ segments }}</span>
+                    <span class="stat-label">Segments</span>
+                    <div class="stat-trend">Identified</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="stat-number">{{ avg_engagement }}</span>
+                    <span class="stat-label">Avg Engagement</span>
+                    <div class="stat-trend up">↑ 8.3%</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="stat-number">{{ avg_duration }}m</span>
+                    <span class="stat-label">Avg Session</span>
+                    <div class="stat-trend up">↑ 5.2%</div>
+                </div>
+            </div>
+            
+            <div class="hero-badges animate-fade-in animate-delay-3">
+                <span class="badge">🚀 K-Means Clustering</span>
+                <span class="badge">🎯 4 Distinct Segments</span>
+                <span class="badge">📊 Real-time Insights</span>
+                <span class="badge">⚡ 50K+ Users</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wave Divider -->
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,40 C360,120 720,0 1080,60 C1260,90 1380,70 1440,80 L1440,120 L0,120 Z" fill="#fdf2f8"/>
+        </svg>
+    </div>
+</section>
+
+<!-- ============================================================
+     KEY PERFORMANCE INDICATORS
+     ============================================================ -->
+<section class="metrics-section">
+    <div class="container">
+        <div class="section-header animate-fade-in">
+            <span class="section-badge">📊 Metrics</span>
+            <h2>Key Performance Indicators</h2>
+            <p>Real-time metrics across all user segments</p>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card animate-fade-in animate-delay-1">
+                <div class="metric-icon-wrapper">
+                    <span class="metric-icon">👥</span>
+                </div>
+                <div class="metric-value">{{ total_users|format_number }}</div>
+                <div class="metric-label">Total Users</div>
+                <div class="metric-trend up">↑ 12% growth</div>
+            </div>
+            <div class="metric-card animate-fade-in animate-delay-2">
+                <div class="metric-icon-wrapper">
+                    <span class="metric-icon">🏷️</span>
+                </div>
+                <div class="metric-value">{{ segments }}</div>
+                <div class="metric-label">User Segments</div>
+                <div class="metric-trend">Identified via clustering</div>
+            </div>
+            <div class="metric-card animate-fade-in animate-delay-3">
+                <div class="metric-icon-wrapper">
+                    <span class="metric-icon">📈</span>
+                </div>
+                <div class="metric-value">{{ avg_engagement }}</div>
+                <div class="metric-label">Avg Engagement Score</div>
+                <div class="metric-trend up">↑ 8.3% from last month</div>
+            </div>
+            <div class="metric-card animate-fade-in animate-delay-4">
+                <div class="metric-icon-wrapper">
+                    <span class="metric-icon">⏱️</span>
+                </div>
+                <div class="metric-value">{{ avg_duration }} min</div>
+                <div class="metric-label">Avg Session Duration</div>
+                <div class="metric-trend up">↑ 5.2% from last month</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     SEGMENT OVERVIEW - CORRECTED DISPLAY
+     ============================================================ -->
+<section class="segments-overview">
+    <div class="container">
+        <div class="section-header animate-fade-in">
+            <span class="section-badge">👥 Segments</span>
+            <h2>User Segments Overview</h2>
+            <p>Four distinct behavioral groups identified through K-Means clustering</p>
+        </div>
+        
+        <div class="segments-grid">
+            <!-- 🌟 HIGH ENGAGEMENT - Cluster 0 -->
+            <div class="segment-card animate-fade-in animate-delay-1" 
+                 style="--card-color: #ec4899;" 
+                 onclick="window.location.href='{{ url_for('segment_detail', cluster_id=0) }}'">
+                <div class="segment-card-glow" style="background: #ec4899;"></div>
+                
+                <div class="segment-header">
+                    <div class="segment-badge-wrapper">
+                        <span class="segment-badge" style="background: #ec4899;">🌟</span>
+                        <span class="segment-name">High Engagement</span>
+                    </div>
+                    <span class="segment-count">17,110 users</span>
+                </div>
+                
+                <div class="segment-metrics">
+                    <div class="segment-metric">
+                        <span class="metric-label">Sessions/Week</span>
+                        <span class="metric-value">10</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Session Duration</span>
+                        <span class="metric-value">12.85 min</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Engagement Score</span>
+                        <span class="metric-value">82.39</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Days Since Login</span>
+                        <span class="metric-value">21</span>
+                    </div>
+                </div>
+                
+                <div class="segment-percentage">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 34.22%; background: #ec4899;"></div>
+                    </div>
+                    <span class="percentage-text">34.22% of users</span>
+                </div>
+                
+                <div class="segment-action">
+                    <span>View details →</span>
+                </div>
+            </div>
+
+            <!-- 📊 MODERATE ENGAGEMENT - Cluster 1 -->
+            <div class="segment-card animate-fade-in animate-delay-2" 
+                 style="--card-color: #f9a8d4;" 
+                 onclick="window.location.href='{{ url_for('segment_detail', cluster_id=1) }}'">
+                <div class="segment-card-glow" style="background: #f9a8d4;"></div>
+                
+                <div class="segment-header">
+                    <div class="segment-badge-wrapper">
+                        <span class="segment-badge" style="background: #f9a8d4;">📊</span>
+                        <span class="segment-name">Moderate Engagement</span>
+                    </div>
+                    <span class="segment-count">12,071 users</span>
+                </div>
+                
+                <div class="segment-metrics">
+                    <div class="segment-metric">
+                        <span class="metric-label">Sessions/Week</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Session Duration</span>
+                        <span class="metric-value">24.44 min</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Engagement Score</span>
+                        <span class="metric-value">38.21</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Days Since Login</span>
+                        <span class="metric-value">7</span>
+                    </div>
+                </div>
+                
+                <div class="segment-percentage">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 24.14%; background: #f9a8d4;"></div>
+                    </div>
+                    <span class="percentage-text">24.14% of users</span>
+                </div>
+                
+                <div class="segment-action">
+                    <span>View details →</span>
+                </div>
+            </div>
+
+            <!-- 📱 OCCASIONAL / CONTENT-LIGHT - Cluster 2 -->
+            <div class="segment-card animate-fade-in animate-delay-3" 
+                 style="--card-color: #fbcfe8;" 
+                 onclick="window.location.href='{{ url_for('segment_detail', cluster_id=2) }}'">
+                <div class="segment-card-glow" style="background: #fbcfe8;"></div>
+                
+                <div class="segment-header">
+                    <div class="segment-badge-wrapper">
+                        <span class="segment-badge" style="background: #fbcfe8;">📱</span>
+                        <span class="segment-name">Occasional / Content-Light</span>
+                    </div>
+                    <span class="segment-count">11,200 users</span>
+                </div>
+                
+                <div class="segment-metrics">
+                    <div class="segment-metric">
+                        <span class="metric-label">Sessions/Week</span>
+                        <span class="metric-value">5</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Session Duration</span>
+                        <span class="metric-value">3.41 min</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Engagement Score</span>
+                        <span class="metric-value">55.79</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Days Since Login</span>
+                        <span class="metric-value">20</span>
+                    </div>
+                </div>
+                
+                <div class="segment-percentage">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 22.01%; background: #fbcfe8;"></div>
+                    </div>
+                    <span class="percentage-text">22.01% of users</span>
+                </div>
+                
+                <div class="segment-action">
+                    <span>View details →</span>
+                </div>
+            </div>
+
+            <!-- ⚠️ LOW ENGAGEMENT / AT-RISK - Cluster 3 -->
+            <div class="segment-card animate-fade-in animate-delay-4" 
+                 style="--card-color: #f472b6;" 
+                 onclick="window.location.href='{{ url_for('segment_detail', cluster_id=3) }}'">
+                <div class="segment-card-glow" style="background: #f472b6;"></div>
+                
+                <div class="segment-header">
+                    <div class="segment-badge-wrapper">
+                        <span class="segment-badge" style="background: #f472b6;">⚠️</span>
+                        <span class="segment-name">Low Engagement / At-Risk</span>
+                    </div>
+                    <span class="segment-count">9,619 users</span>
+                </div>
+                
+                <div class="segment-metrics">
+                    <div class="segment-metric">
+                        <span class="metric-label">Sessions/Week</span>
+                        <span class="metric-value">8</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Session Duration</span>
+                        <span class="metric-value">19.93 min</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Engagement Score</span>
+                        <span class="metric-value">63.3</span>
+                    </div>
+                    <div class="segment-metric">
+                        <span class="metric-label">Days Since Login</span>
+                        <span class="metric-value">43</span>
+                    </div>
+                </div>
+                
+                <div class="segment-percentage">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 19.24%; background: #f472b6;"></div>
+                    </div>
+                    <span class="percentage-text">19.24% of users</span>
+                </div>
+                
+                <div class="segment-action">
+                    <span>View details →</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     QUICK ACTION CARDS
+     ============================================================ -->
+<section class="quick-actions">
+    <div class="container">
+        <div class="section-header animate-fade-in">
+            <span class="section-badge">🚀 Actions</span>
+            <h2>Explore Your Data</h2>
+            <p>Dive deeper into user behavior insights</p>
+        </div>
+        
+        <div class="action-grid">
+            <div class="action-card animate-fade-in animate-delay-1" 
+                 onclick="window.location.href='{{ url_for('segments') }}'">
+                <div class="action-icon-wrapper">
+                    <span class="action-icon">👥</span>
+                </div>
+                <h3>Explore Segments</h3>
+                <p>View detailed breakdown of all user segments</p>
+                <span class="action-arrow">→</span>
+            </div>
+            
+            <div class="action-card animate-fade-in animate-delay-2" 
+                 onclick="window.location.href='{{ url_for('analytics') }}'">
+                <div class="action-icon-wrapper">
+                    <span class="action-icon">📈</span>
+                </div>
+                <h3>View Analytics</h3>
+                <p>Dive into visual insights and patterns</p>
+                <span class="action-arrow">→</span>
+            </div>
+            
+            <div class="action-card animate-fade-in animate-delay-3" 
+                 onclick="window.location.href='{{ url_for('reports') }}'">
+                <div class="action-icon-wrapper">
+                    <span class="action-icon">📊</span>
+                </div>
+                <h3>Business Reports</h3>
+                <p>Get actionable recommendations</p>
+                <span class="action-arrow">→</span>
+            </div>
+            
+            <div class="action-card animate-fade-in animate-delay-4" 
+                 onclick="window.location.href='{{ url_for('predict_page') }}'">
+                <div class="action-icon-wrapper">
+                    <span class="action-icon">🔮</span>
+                </div>
+                <h3>Predict Segment</h3>
+                <p>Predict user segment using ML model</p>
+                <span class="action-arrow">→</span>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

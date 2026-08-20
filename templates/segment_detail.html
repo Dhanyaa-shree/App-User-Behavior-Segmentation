@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}{{ data.segment }} - Segment Details{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="{{ url_for('segments') }}">← Back to Segments</a>
+        </div>
+        <div class="segment-header-detail">
+            <div class="segment-title">
+                <span class="segment-icon-large" style="color: {{ data.color }};">
+                    {{ data.icon }}
+                </span>
+                <div>
+                    <h1 style="color: {{ data.color }};">{{ data.segment }}</h1>
+                    <p>Cluster {{ data.cluster }} • {{ data.total_users }} users</p>
+                </div>
+            </div>
+            <div class="segment-actions">
+                <a href="{{ url_for('export_cluster', cluster_id=data.cluster) }}" class="btn btn-success">
+                    📥 Export CSV
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="segment-detail-section" style="padding: 40px 0 60px; background: #f8fafc;">
+    <div class="container">
+        <div class="detail-stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Users</span>
+                <span class="stat-value">{{ data.total_users|format_number }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Avg Sessions/Week</span>
+                <span class="stat-value">{{ data.users[0].sessions_per_week if data.users else 0 }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Avg Engagement</span>
+                <span class="stat-value">{{ data.users[0].engagement_score if data.users else 0 }}</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Pages per Session</span>
+                <span class="stat-value">{{ data.users[0].pages_viewed_per_session if data.users else 0 }}</span>
+            </div>
+        </div>
+
+        <div class="user-table-container">
+            <h3>User List</h3>
+            <div class="table-controls">
+                <div class="table-search">
+                    <input type="text" id="userSearch" placeholder="🔍 Search users..." class="search-input">
+                </div>
+                <div class="table-info">
+                    Showing {{ data.users|length }} of {{ data.total_users|format_number }} users
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Sessions/Week</th>
+                            <th>Avg Duration</th>
+                            <th>Daily Minutes</th>
+                            <th>Engagement</th>
+                            <th>Features</th>
+                            <th>Notifications</th>
+                            <th>Days Since Login</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        {% for user in data.users %}
+                        <tr>
+                            <td><strong>{{ user.user_id }}</strong></td>
+                            <td>{{ user.sessions_per_week }}</td>
+                            <td>{{ user.avg_session_duration_min }} min</td>
+                            <td>{{ user.daily_active_minutes }}</td>
+                            <td>
+                                <span class="engagement-badge {% if user.engagement_score >= 70 %}high{% elif user.engagement_score >= 50 %}medium{% else %}low{% endif %}">
+                                    {{ user.engagement_score }}
+                                </span>
+                            </td>
+                            <td>{{ user.feature_clicks_per_session }}</td>
+                            <td>{{ user.notifications_opened_per_week }}</td>
+                            <td>{{ user.days_since_last_login }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <div class="pagination-info">
+                    Page {{ data.page }} of {{ data.total_pages }}
+                </div>
+                <div class="pagination-controls">
+                    {% if data.page > 1 %}
+                    <a href="{{ url_for('segment_detail', cluster_id=data.cluster, page=data.page-1) }}" class="btn btn-sm">← Previous</a>
+                    {% endif %}
+                    
+                    {% for p in range(1, data.total_pages + 1) %}
+                        {% if p == data.page %}
+                            <span class="page-current">{{ p }}</span>
+                        {% elif p <= 5 or p > data.total_pages - 2 %}
+                            <a href="{{ url_for('segment_detail', cluster_id=data.cluster, page=p) }}" class="page-link">{{ p }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if data.page < data.total_pages %}
+                    <a href="{{ url_for('segment_detail', cluster_id=data.cluster, page=data.page+1) }}" class="btn btn-sm">Next →</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('userSearch').oninput = function() {
+    var query = this.value.toLowerCase();
+    var rows = document.querySelectorAll('#userTableBody tr');
+    
+    for (var i = 0; i < rows.length; i++) {
+        var text = rows[i].textContent.toLowerCase();
+        if (text.indexOf(query) > -1) {
+            rows[i].style.display = '';
+        } else {
+            rows[i].style.display = 'none';
+        }
+    }
+};
+</script>
+{% endblock %}

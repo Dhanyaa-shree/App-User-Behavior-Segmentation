@@ -1,0 +1,328 @@
+{% extends "base.html" %}
+
+{% block title %}Segments - App User Segmentation{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1>👥 User Segments</h1>
+        <p>Detailed view of all user segments with key behavioral metrics</p>
+    </div>
+</section>
+
+<section class="segments-full">
+    <div class="container">
+        <div class="segments-controls">
+            <div class="filter-group">
+                <input type="text" id="segmentSearch" placeholder="🔍 Search segments..." class="search-input">
+            </div>
+            <div class="view-options">
+                <button class="btn btn-sm active" onclick="setView('grid')">📊 Grid</button>
+                <button class="btn btn-sm" onclick="setView('list')">📋 List</button>
+            </div>
+        </div>
+
+        <div class="segments-grid-full" id="segmentsContainer">
+            <!-- 🌟 HIGH ENGAGEMENT - Cluster 0 -->
+            <div class="segment-card-full" onclick="window.location.href='{{ url_for('segment_detail', cluster_id=0) }}'">
+                <div class="segment-top">
+                    <div class="segment-icon" style="background: #ec489920; color: #ec4899;">
+                        🌟
+                    </div>
+                    <div class="segment-info">
+                        <h3 style="color: #ec4899;">High Engagement</h3>
+                        <p>17,110 users (34.22%)</p>
+                    </div>
+                    <div class="segment-status">
+                        <span class="status-dot" style="background: #ec4899;"></span>
+                        Active
+                    </div>
+                </div>
+                
+                <div class="segment-details">
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Sessions/Week</span>
+                            <span class="value">10</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Session Duration</span>
+                            <span class="value">12.85 min</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Daily Minutes</span>
+                            <span class="value">57.06</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Engagement</span>
+                            <span class="value">82.39</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Days Since Login</span>
+                            <span class="value">21</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Feature Clicks</span>
+                            <span class="value">13</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Notifications</span>
+                            <span class="value">7</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Churn Risk</span>
+                            <span class="value">🟢 Low</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-footer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 34.22%; background: #ec4899;"></div>
+                    </div>
+                    <div class="segment-actions">
+                        <span class="view-link">View all users →</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 📊 MODERATE ENGAGEMENT - Cluster 1 -->
+            <div class="segment-card-full" onclick="window.location.href='{{ url_for('segment_detail', cluster_id=1) }}'">
+                <div class="segment-top">
+                    <div class="segment-icon" style="background: #f9a8d420; color: #f9a8d4;">
+                        📊
+                    </div>
+                    <div class="segment-info">
+                        <h3 style="color: #f9a8d4;">Moderate Engagement</h3>
+                        <p>12,071 users (24.14%)</p>
+                    </div>
+                    <div class="segment-status">
+                        <span class="status-dot" style="background: #f9a8d4;"></span>
+                        Active
+                    </div>
+                </div>
+                
+                <div class="segment-details">
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Sessions/Week</span>
+                            <span class="value">8</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Session Duration</span>
+                            <span class="value">24.44 min</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Daily Minutes</span>
+                            <span class="value">42.03</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Engagement</span>
+                            <span class="value">38.21</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Days Since Login</span>
+                            <span class="value">7</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Feature Clicks</span>
+                            <span class="value">7</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Notifications</span>
+                            <span class="value">7</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Churn Risk</span>
+                            <span class="value">🟢 Low</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-footer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 24.14%; background: #f9a8d4;"></div>
+                    </div>
+                    <div class="segment-actions">
+                        <span class="view-link">View all users →</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 📱 OCCASIONAL / CONTENT-LIGHT - Cluster 2 -->
+            <div class="segment-card-full" onclick="window.location.href='{{ url_for('segment_detail', cluster_id=2) }}'">
+                <div class="segment-top">
+                    <div class="segment-icon" style="background: #fbcfe820; color: #fbcfe8;">
+                        📱
+                    </div>
+                    <div class="segment-info">
+                        <h3 style="color: #fbcfe8;">Occasional / Content-Light</h3>
+                        <p>11,200 users (22.01%)</p>
+                    </div>
+                    <div class="segment-status">
+                        <span class="status-dot" style="background: #fbcfe8;"></span>
+                        Active
+                    </div>
+                </div>
+                
+                <div class="segment-details">
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Sessions/Week</span>
+                            <span class="value">5</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Session Duration</span>
+                            <span class="value">3.41 min</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Daily Minutes</span>
+                            <span class="value">52.71</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Engagement</span>
+                            <span class="value">55.79</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Days Since Login</span>
+                            <span class="value">20</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Feature Clicks</span>
+                            <span class="value">13</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Notifications</span>
+                            <span class="value">5</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Churn Risk</span>
+                            <span class="value">🟡 Medium</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-footer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 22.01%; background: #fbcfe8;"></div>
+                    </div>
+                    <div class="segment-actions">
+                        <span class="view-link">View all users →</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ⚠️ LOW ENGAGEMENT / AT-RISK - Cluster 3 -->
+            <div class="segment-card-full" onclick="window.location.href='{{ url_for('segment_detail', cluster_id=3) }}'">
+                <div class="segment-top">
+                    <div class="segment-icon" style="background: #f472b620; color: #f472b6;">
+                        ⚠️
+                    </div>
+                    <div class="segment-info">
+                        <h3 style="color: #f472b6;">Low Engagement / At-Risk</h3>
+                        <p>9,619 users (19.24%)</p>
+                    </div>
+                    <div class="segment-status">
+                        <span class="status-dot" style="background: #f472b6;"></span>
+                        Active
+                    </div>
+                </div>
+                
+                <div class="segment-details">
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Sessions/Week</span>
+                            <span class="value">8</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Session Duration</span>
+                            <span class="value">19.93 min</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Daily Minutes</span>
+                            <span class="value">14.86</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Engagement</span>
+                            <span class="value">63.3</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-item">
+                            <span class="label">Days Since Login</span>
+                            <span class="value">43</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Feature Clicks</span>
+                            <span class="value">15</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Notifications</span>
+                            <span class="value">2</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Churn Risk</span>
+                            <span class="value">🔴 High</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="segment-footer">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 19.24%; background: #f472b6;"></div>
+                    </div>
+                    <div class="segment-actions">
+                        <span class="view-link">View all users →</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function setView(view) {
+    var container = document.getElementById('segmentsContainer');
+    if (!container) return;
+    
+    var buttons = document.querySelectorAll('.view-options .btn');
+    
+    if (buttons.length > 0) {
+        buttons[0].classList.remove('active');
+        buttons[1].classList.remove('active');
+    }
+    
+    if (view === 'grid') {
+        container.className = 'segments-grid-full';
+        if (buttons.length > 0) {
+            buttons[0].classList.add('active');
+        }
+    } else {
+        container.className = 'segments-grid-full list-view';
+        if (buttons.length > 0) {
+            buttons[1].classList.add('active');
+        }
+    }
+}
+
+document.getElementById('segmentSearch').oninput = function() {
+    var query = this.value.toLowerCase();
+    var cards = document.querySelectorAll('.segment-card-full');
+    
+    for (var i = 0; i < cards.length; i++) {
+        var text = cards[i].textContent.toLowerCase();
+        if (text.indexOf(query) > -1) {
+            cards[i].style.display = 'block';
+        } else {
+            cards[i].style.display = 'none';
+        }
+    }
+};
+</script>
+{% endblock %}
